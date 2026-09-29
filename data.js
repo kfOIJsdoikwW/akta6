@@ -7,18 +7,19 @@
 
 const CASE_NO = '01100/2231/2025.bü.';
 const CASE_YEAR = 2025;
-// A buli tudta nélkül készült képei – ezeket cseréld le a Pinterestről szedett fotókra (arc nélküli / hátulról / távoli bulifotók).
-const PARTY_IMG = ['img/buli1.jpg', 'img/buli2.jpg'];
+// A buli tudta nélkül készült képei – EZEK A BIZONYÍTÉKOK: ezeket küldi a zsaroló DM-ben,
+// ezek szerepelnek Laura posztjában/sztorijában és Bence rácsában, és ezeket ismeri fel a metaadat-elemző.
+const PARTY_IMG = ['img/rejtettkep.jpg', 'img/buli1.jpg'];
 const PARTY_FILENAME = 'IMG_20250614_231502.jpg';
 
-/* ---------- Szereplők (profilkép: hsl-szín + monogram; ha lesz kép, a `pic` mezőbe tedd a fájlt) ---------- */
+/* ---------- Szereplők (profilkép: a `pic` mező = img/<pic>.jpg; ha nincs ilyen fájl, színes monogram jelenik meg) ---------- */
 const P = {
-  reka:   { u: 'reka.szdesignn', n: 'Réka', h: 330, real: 'Szabó Réka' },
-  mate:   { u: 'mate_k04', n: 'Máté', h: 210 },
+  reka:   { u: 'reka.szdesignn', n: 'Réka', h: 330, pic: 'rekaprof', real: 'Szabó Réka' },
+  mate:   { u: 'mate_k04', n: 'Máté', h: 210, pic: 'mateprof' },
   bence:  { u: 'bencehimself', n: 'Bence', h: 205, real: 'Kovács Bence' },
   anon:   { u: 'nem.felejtek', n: 'nem.felejtek', anon: true },
-  zsofi:  { u: 'zsofi.hvth', n: 'Zsófi', h: 285 },
-  laura:  { u: 'laura.kiss_', n: 'Laura', h: 20 },
+  zsofi:  { u: 'zsofi.hvth', n: 'Zsófi', h: 285, pic: 'zsofiprof' },
+  laura:  { u: 'laura.kiss_', n: 'Laura', h: 20, pic: 'lauraprof' },
   panni:  { u: 'panni.b', n: 'Panni', h: 145 },
   dori:   { u: 'dorka.official', n: 'Dorka', h: 350 },
   gergo:  { u: 'gergo.n', n: 'Gergő', h: 190 },
@@ -32,52 +33,72 @@ const P = {
 };
 const who = k => P[k];
 
+/* =========================================================
+   INSTAGRAM – KÉPEK
+   Minden kép helye: img/<név>.jpg. Rövidítés: sima szöveg ('reka1') = img/reka1.jpg.
+   EV0 / EV1 = a két bizonyíték-kép (PARTY_IMG), ezeket NE cseréld sima névre,
+   mert a metaadat-elemző és a DM-ek is ezekre hivatkoznak.
+   Posztokban, rácsokban, sztorikban CSAK létező képek vannak: ahány kép, annyi poszt.
+   ========================================================= */
+const EV0 = { pic: 'party', img: 0 };   // img/rejtettkep.jpg
+const EV1 = { pic: 'party', img: 1 };   // img/buli1.jpg
+
 /* ---------- Instagram: sztorik (a főoldali karikák) ---------- */
 const IG_STORIES = [
-  { k: 'reka', me: true, slides: [{ pic: 'buli', h: 330, txt: 'új korszak ✨' }] },
+  { k: 'reka', me: true, slides: [{ pic: 'reka9', txt: 'új korszak ✨' }] },
   { k: 'laura', slides: [
       { pic: 'party', img: 0, txt: 'BULI 🎉🎂' },
       { pic: 'party', img: 1, txt: 'best night 🥳', meta: 'Készült: 2025.06.14. 23:15 · Budapest' },
-      { h: 20, txt: 'köszi hogy eljöttetek 💛' }] },
-  { k: 'dori', slides: [{ h: 350, txt: 'gym 💪' }, { h: 350, txt: 'matcha ☕' }] },
-  { k: 'gergo', slides: [{ h: 190, txt: 'meccs este 🏀' }] },
-  { k: 'vivi', slides: [{ h: 300, txt: 'sunset 🌇' }] },
-  { k: 'noemi', slides: [{ h: 260, txt: 'új haj 💇‍♀️' }] }
+      { pic: 'buli7', txt: 'köszi hogy eljöttetek 💛' }] },
+  { k: 'zsofi', slides: [{ pic: 'zsofi5', txt: 'próba 💃' }] },
+  { k: 'dori', slides: [{ pic: 'kondilany', txt: 'gym 💪' }, { pic: 'matcha', txt: 'matcha ☕' }] },
+  { k: 'gergo', slides: [{ pic: 'kosar 2', txt: 'meccs este 🏀' }] },
+  { k: 'vivi', slides: [{ pic: 'naplemente2', txt: 'sunset 🌇' }] },
+  { k: 'noemi', slides: [{ pic: 'ujhaj', txt: 'új haj 💇‍♀️' }] },
+  { k: 'panni', slides: [{ pic: 'hazimozi3', txt: 'filmest 🍿' }] }
 ];
 
 /* ---------- Instagram: feed posztok ---------- */
 const IG_FEED = [
-  { by: 'reka', pin: true, imgs: [{ pic: 'love', txt: 'mi ketten 🤍' }, { h: 210, txt: '📸' }], likes: 142,
+  { by: 'reka', pin: true, imgs: ['kosar1', 'reka10'], likes: 142,
     cap: 'a legjobb ember mellettem 🫶 @mate_k04', date: '2025. SZEPTEMBER 28.',
     comments: [['mate_k04', '🤍🤍🤍'], ['laura.kiss_', 'cukik vagytok!!'], ['dorka.official', '😍😍']] },
-  { by: 'laura', imgs: [{ pic: 'party', img: 0 }, { pic: 'party', img: 1 }], likes: 208,
-    cap: '16 🎂 életem legjobb bulija, köszi mindenkinek 💛 #szülinap', date: '2025. JÚNIUS 15.',
-    comments: [['reka.szdesignn', 'imádtam!! 🥳'], ['panni.b', 'a torta 😍'], ['vivien.k', '🔥🔥']] },
-  { by: 'dori', imgs: [{ h: 350, txt: 'matcha' }], likes: 96, cap: 'lassú reggelek ☕', date: '2025. SZEPTEMBER 20.',
+  { by: 'zsofi', imgs: ['zsofi1', 'zsofi4'], likes: 118, cap: 'új koreó hamarosan 🖤', date: '2025. SZEPTEMBER 25.',
+    comments: [['panni.b', 'odaaa 🔥'], ['bianka_', 'tanítsd meg!!']] },
+  { by: 'dori', imgs: ['matcha'], likes: 96, cap: 'lassú reggelek ☕', date: '2025. SZEPTEMBER 20.',
     comments: [['noemi.rose', 'hol ez a hely??'], ['dorka.official', '@noemi.rose dm 💌']] },
-  { by: 'mate', imgs: [{ h: 210, txt: 'kosár' }], likes: 77, cap: 'hajrá csapat 🏀', date: '2025. SZEPTEMBER 12.',
+  { by: 'panni', imgs: ['hazimozi1', 'hazimozi2', 'hazimozi3'], likes: 58, cap: 'péntek esti filmmaraton 🍿🎬', date: '2025. SZEPTEMBER 19.',
+    comments: [['vivien.k', 'legközelebb én is jövök!!']] },
+  { by: 'mate', imgs: ['mate1', 'mate2'], likes: 77, cap: 'hajrá csapat 🏀', date: '2025. SZEPTEMBER 12.',
     comments: [['gergo.n', '💪'], ['reka.szdesignn', '🥰']] },
-  { by: 'vivi', imgs: [{ h: 300, txt: 'naplemente' }], likes: 61, cap: 'golden hour 🌅', date: '2025. AUGUSZTUS 30.', comments: [['bianka_', '🤍']] },
-  { by: 'gergo', imgs: [{ h: 190, txt: 'edzés' }], likes: 44, cap: 'leg day 🦵', date: '2025. AUGUSZTUS 22.', comments: [] }
+  { by: 'bence', imgs: ['bence4'], likes: 64, cap: 'vissza a pályán ⚽', date: '2025. SZEPTEMBER 6.',
+    comments: [['gergo.n', 'gólkirály 👑']] },
+  { by: 'vivi', imgs: ['naplemente1', 'naplemente3'], likes: 61, cap: 'golden hour 🌅', date: '2025. AUGUSZTUS 30.', comments: [['bianka_', '🤍']] },
+  { by: 'gergo', imgs: ['kondifiu', 'kondi'], likes: 44, cap: 'leg day 🦵', date: '2025. AUGUSZTUS 22.', comments: [] },
+  { by: 'laura', imgs: [EV0, EV1, 'laura3', 'buli3', 'buli5', 'laura4'], likes: 208,
+    cap: '16 🎂 életem legjobb bulija, köszi mindenkinek 💛 #szülinap', date: '2025. JÚNIUS 15.',
+    comments: [['reka.szdesignn', 'imádtam!! 🥳'], ['panni.b', 'a torta 😍'], ['vivien.k', '🔥🔥']] }
 ];
 
-/* ---------- Instagram: profilok ---------- */
+/* ---------- Instagram: profilok ----------
+   A „bejegyzés” szám automatikusan a rács képeinek száma (ha nincs külön `posts` megadva). */
 const IG_PROFILES = {
-  reka:  { posts: 34, followers: '612', following: 401, bio: 'Réka · 16\nBudapest 📍\ngrafika & fotó 🎨', priv: false,
-    highlights: [{ n: 'mi ✨', pic: 'love' }, { n: 'nyár ☀️', h: 40 }, { n: 'art 🎨', h: 330 }],
-    grid: [{ pic: 'love' }, { h: 210 }, { h: 40 }, { h: 330 }, { h: 300 }, { h: 20 }, { h: 260 }, { h: 145 }, { h: 350 }] },
+  reka:  { followers: '612', following: 401, bio: 'Réka · 16\nBudapest 📍\ngrafika & fotó 🎨', priv: false,
+    highlights: [{ n: 'mi ✨', pic: 'kosar1' }, { n: 'nyár ☀️', pic: 'reka7' }, { n: 'art 🎨', pic: 'reka2' }],
+    grid: ['kosar1', 'reka10', 'reka9', 'reka11', 'reka1', 'reka2', 'reka4', 'reka5', 'reka6', 'reka7', 'reka8'] },
   anon:  { posts: 0, followers: '0', following: 1, bio: '', priv: true, anon: true, joined: '2025.10.01.' },
-  bence: { posts: 18, followers: '389', following: 420, bio: 'Bence · 17\nfoci ⚽ | zene 🎧\n„aki tudja, tudja”', priv: false,
-    highlights: [{ n: 'foci ⚽', h: 205 }, { n: 'nyár ☀️', pic: 'party', img: 0 }],
-    grid: [{ h: 205 }, { pic: 'party', img: 0 }, { h: 205 }, { h: 130 }, { h: 205 }, { h: 190 }] },
-  zsofi: { posts: 27, followers: '503', following: 388, bio: 'Zsófi 🤍\ndancer 💃', priv: false,
-    highlights: [{ n: 'tánc 💃', h: 285 }, { n: 'me 🤍', h: 285 }],
-    grid: [{ h: 285 }, { h: 300 }, { h: 285 }, { h: 55 }, { h: 285 }, { h: 260 }] },
-  laura: { posts: 51, followers: '740', following: 512, bio: 'Laura 🎂\n16 · Bp', priv: false,
-    highlights: [{ n: '16 🎂', pic: 'party', img: 0 }, { n: 'nyár ☀️', pic: 'party', img: 1 }],
-    grid: [{ pic: 'party', img: 0 }, { pic: 'party', img: 1 }, { h: 20 }, { h: 300 }, { h: 145 }, { h: 350 }] },
-  mate:  { posts: 22, followers: '430', following: 366, bio: 'Máté\nkosár 🏀', priv: false, highlights: [],
-    grid: [{ h: 210 }, { pic: 'love' }, { h: 190 }, { h: 210 }, { h: 130 }, { h: 210 }] }
+  bence: { followers: '389', following: 420, bio: 'Bence · 17\nfoci ⚽ | zene 🎧\n„aki tudja, tudja”', priv: false,
+    highlights: [{ n: 'foci ⚽', pic: 'bence4' }, { n: 'nyár ☀️', pic: 'party', img: 0 }],
+    grid: ['bence4', EV0, 'bence2', 'bence1', 'bence3', 'bence5', 'bence6'] },
+  zsofi: { followers: '503', following: 388, bio: 'Zsófi 🤍\ndancer 💃', priv: false,
+    highlights: [{ n: 'tánc 💃', pic: 'zsofi2' }, { n: 'me 🤍', pic: 'zsofi8' }],
+    grid: ['zsofi1', 'zsofi4', 'zsofi5', 'zsofi2', 'zsofi3', 'zsofi6', 'zsofi8'] },
+  laura: { followers: '740', following: 512, bio: 'Laura 🎂\n16 · Bp', priv: false,
+    highlights: [{ n: '16 🎂', pic: 'party', img: 0 }, { n: 'nyár ☀️', pic: 'laura4' }, { n: 'sütis 🍪', pic: 'laura5' }],
+    grid: [EV0, EV1, 'laura3', 'buli3', 'buli5', 'laura4', 'laura5', 'laura2', 'laura1'] },
+  mate:  { followers: '430', following: 366, bio: 'Máté\nkosár 🏀', priv: false,
+    highlights: [{ n: 'kosár 🏀', pic: 'mate5' }],
+    grid: ['mate1', 'mate2', 'kosar1', 'mate5', 'mate3', 'mate4'] }
 };
 
 /* ---------- Instagram: DM lista + beszélgetések ---------- */

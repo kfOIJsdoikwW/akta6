@@ -20,17 +20,26 @@ A diákoknak szánt kiinduló nyomtatvány (jegyzőkönyv + QR + kérdések + pr
 4. A `MEGOLDOKULCS.md`-t **ne** töltsd fel a diákoknak szánt repóba.
 
 ## Saját képek (opcionális, de sokat dob a valóságérzeten)
-Minden kép helyőrzővel működik, tehát képek nélkül is teljes a feladat. Ha valósághűbbé tennéd, tegyél `.jpg` fájlokat az `img/` mappába – ha egy fájl hiányzik, a rendszer automatikusan a színes helyőrzőre vált.
+Minden kép helyőrzővel működik, tehát képek nélkül is teljes a feladat. Ahol nincs feltöltött fájl, ott a rendszer automatikusan színes helyőrzőre vált. Ha valósághűbbé tennéd, tedd a `.jpg` fájlokat az `img/` mappába a lenti pontos fájlnevekkel.
 
-**Fontos, hogy senki ne legyen felismerhető** a képeken (arc nélkül, hátulról, tömegben, tárgyakról/helyszínekről).
+**Fontos, hogy senki ne legyen felismerhető** a képeken (arc nélkül, hátulról, tömegben, tárgyakról/helyszínekről). Feed-képek 4:5 (álló) arányban, profilképek négyzetesen néznek ki a legjobban.
 
-Ajánlott képek (a `data.js`-ben hivatkozott kulcsok):
-- `img/buli1.jpg`, `img/buli2.jpg` – **buli tudta nélkül** hangulat: háttal álló fiatalok, füzérfény, tömeg, koccintás felülről; arc ne látszódjon. Ez a két kép a metaadat-elemzés tárgya is.
-- `img/love.jpg` – Réka és Máté „páros” posztja: összefont kéz, két kávéspohár, naplemente sziluett – arc nélkül.
-- Profilképek: `img/pp_reka.jpg`, `img/pp_bence.jpg`, `img/pp_zsofi.jpg`, `img/pp_laura.jpg`, `img/pp_mate.jpg`, `img/pp_dori.jpg`, `img/pp_gergo.jpg`, `img/pp_vivi.jpg` stb. – semleges, arc nélküli avatarok (tárgy, tájkép, sziluett). A fájlnév a `data.js`-beli kulcs: `pp_<kulcs>.jpg`.
-- Highlight/rács-képek: nem kötelezők, a színes helyőrzők jól néznek ki. Ha mégis, bármely arc nélküli, hangulati kép megteszi (edzés, matcha, naplemente, tánc – tárgy/sziluett szinten).
+### Tartalmi képek
+- `img/buli1.jpg`, `img/buli2.jpg` – **buli tudta nélkül** hangulat (háttal álló fiatalok, füzérfény, tömeg). Ez a két kép a metaadat-elemzés tárgya is. *(Már benne van egy-egy helyőrző.)*
+- `img/love.jpg` – Réka és Máté „páros” posztja (összefont kéz, két pohár, naplemente sziluett).
 
-Pinterestről szedve érdemes 4:5 (álló) arányú, arc nélküli, „insta-hangulatú” képeket keresni. A profilképek négyzetesek legyenek.
+### Feed-posztképek (opcionális)
+- `img/feed_reka.jpg` – Réka második posztképe
+- `img/feed_dori.jpg` – lassú reggel / matcha
+- `img/feed_mate.jpg` – kosárlabda
+- `img/feed_vivi.jpg` – naplemente (golden hour)
+- `img/feed_gergo.jpg` – edzés
+
+### Profilképek (négyzetes, arc nélküli avatarok)
+`img/pp_reka.jpg`, `pp_bence.jpg`, `pp_zsofi.jpg`, `pp_laura.jpg`, `pp_mate.jpg`, `pp_dori.jpg`, `pp_gergo.jpg`, `pp_vivi.jpg`, `pp_panni.jpg`, `pp_adam.jpg`, `pp_bianka.jpg`, `pp_eszter.jpg`, `pp_hanna.jpg`, `pp_noemi.jpg`, `pp_soma.jpg`
+(A fájlnév mindig `pp_<kulcs>.jpg`, ahol a kulcs a `data.js`-beli azonosító.)
+
+> A sztorik és a profil-rácsok alapból színes helyőrzők – ezek jól néznek ki képek nélkül is. Ha ezekhez is valódi képet szeretnél, szólj, és beépítem a fájlnév-helyeket.
 
 ## Tartalmi elvek
 - Az intim kép sehol nem jelenik meg. Az eltűnő üzenetek helyén csak „Fotó · Megnyitva” jelzés áll.

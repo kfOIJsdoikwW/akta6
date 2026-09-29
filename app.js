@@ -38,31 +38,33 @@ $('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeM
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#modal').hidden) closeModal(); });
 
 /* ---------- Kép- és avatar-segédek ---------- */
-// Igazi kép elérési útja egy objektumhoz (ha nincs, null → színes helyőrző).
+// Egy képhivatkozás lehet sima szöveg ('reka1' → img/reka1.jpg) vagy objektum ({ pic, img, txt, meta, fn }).
+const asPic = o => typeof o === 'string' ? { pic: o } : (o || {});
+const imgPath = name => 'img/' + encodeURIComponent(name) + '.jpg';   // a szóközös fájlnevet is kezeli („kosar 2”)
 function picSrc(o) {
-  if (!o) return null;
+  o = asPic(o);
   if (o.pic === 'party' || o.pic === 'buli') return PARTY_IMG[o.img || 0];
-  if (o.pic === 'love') return 'img/love.jpg';
-  if (o.pic) return 'img/' + o.pic + '.jpg';
+  if (o.pic) return imgPath(o.pic);
   return null;
 }
-function picHue(o) { if (o && o.h != null) return o.h; if (o && (o.pic === 'party' || o.pic === 'buli')) return 275; if (o && o.pic === 'love') return 340; return 260; }
+function picHue(o) { o = asPic(o); if (o.h != null) return o.h; if (o.pic === 'party' || o.pic === 'buli') return 275; return 260; }
 function picLabel(o) {
-  if (o && o.txt) return o.txt;
-  if (o && (o.pic === 'party' || o.pic === 'buli')) return '<b>🎉</b>buli';
-  if (o && o.pic === 'love') return '<b>🤍</b>';
+  o = asPic(o);
+  if (o.txt) return esc(o.txt);
+  if (o.pic === 'party' || o.pic === 'buli') return '<b>🎉</b>buli';
   return '<b>📷</b>';
 }
 function pic(o, cls) {
   const src = picSrc(o);
-  const img = src ? `<img src="${src}" onerror="this.remove()" alt="">` : '';
+  const img = src ? `<img src="${src}" onerror="this.remove()" alt="" loading="lazy">` : '';
   return `<div class="pic ${cls || ''}" style="--h:${picHue(o)}">${img}<span>${picLabel(o)}</span></div>`;
 }
+// Profilkép: img/<kulcs>prof.jpg (pl. rekaprof.jpg, benceprof.jpg) vagy a P[k].pic mezőben megadott fájl; ha nincs meg a fájl: színes monogram.
+function ppSrc(k) { const p = who(k) || {}; return imgPath(p.pic || k + 'prof'); }
 function pp(k) {
   const p = who(k) || {};
   if (p.anon) return '<div class="pp anon" aria-hidden="true"></div>';
-  const src = 'img/pp_' + k + '.jpg';
-  return `<div class="pp" style="--h:${p.h != null ? p.h : 260}"><img src="${src}" onerror="this.remove()" alt="">${esc((p.n || '?')[0])}</div>`;
+  return `<div class="pp" style="--h:${p.h != null ? p.h : 260}"><img src="${ppSrc(k)}" onerror="this.remove()" alt="">${esc((p.n || '?')[0])}</div>`;
 }
 const handle = k => (who(k) || {}).u || k;
 const dispName = k => (who(k) || {}).n || k;
@@ -188,7 +190,7 @@ function igNavBind() {
 
 function igHome() {
   const stories = IG_STORIES.map((s, i) => `<button class="ig-story" data-story="${i}">
-      <span class="ring ${s.me ? '' : ''}"><span class="pp" style="--h:${(who(s.k) || {}).h || 260}"><img src="img/pp_${s.k}.jpg" onerror="this.remove()" alt="">${esc((who(s.k) || {}).n ? who(s.k).n[0] : '?')}</span></span>
+      <span class="ring">${pp(s.k)}</span>
       <span class="n">${s.me ? 'Te' : esc(dispName(s.k))}</span></button>`).join('');
   const feed = IG_FEED.map(postHTML).join('');
   app.innerHTML = igShell('', `<div class="ig-stories">${stories}</div>${feed}`, true, { logo: true });
@@ -256,7 +258,7 @@ function igProfile(k) {
   const hl = (pr.highlights || []).map(h => `<div class="ig-hl"><span class="hl">${pic(h)}</span><span>${esc(h.n)}</span></div>`).join('');
   const grid = (pr.grid || []).map((g, i) => `<button data-grid="${i}">${pic(g)}</button>`).join('');
   app.innerHTML = igShell(handle(k), `<div class="ig-prof">
-      <div class="ig-prof-top">${pp(k)}<div class="ig-stats"><div><b>${pr.posts}</b>bejegyzés</div><div><b>${pr.followers}</b>követő</div><div><b>${pr.following}</b>követett</div></div></div>
+      <div class="ig-prof-top">${pp(k)}<div class="ig-stats"><div><b>${pr.posts != null ? pr.posts : (pr.grid || []).length}</b>bejegyzés</div><div><b>${pr.followers}</b>követő</div><div><b>${pr.following}</b>követett</div></div></div>
       <div class="ig-bio"><b>${esc(dispName(k))}</b>${esc(pr.bio)}</div>
       <div class="ig-btns"><button class="${k === 'reka' ? '' : 'blue'}">${k === 'reka' ? 'Profil szerkesztése' : 'Követés'}</button><button data-dm="${k}">Üzenet</button></div>
       ${hl ? `<div class="ig-hls">${hl}</div>` : ''}
@@ -543,10 +545,10 @@ function vRegistry() {
   app.innerHTML = `<section class="rz-frame">${backBar('Kapcsolati háló – személykereső')}
     <p class="muted">Írjátok be a profillapra felírt adatokat, majd szűrjetek. A cél, hogy egyetlen személy maradjon.</p>
     <form id="rf"><div class="fgrid">
-      <label>Ott volt Laura buliján? (igen/nem)<input data-f="party" value="${esc(RF.party)}" placeholder="pl. igen" autocomplete="off"></label>
-      <label>Használt telefon<input data-f="dev" value="${esc(RF.dev)}" placeholder="pl. iPhone 13" autocomplete="off"></label>
-      <label>Telefonszám vége<input data-f="phone" value="${esc(RF.phone)}" inputmode="numeric" placeholder="pl. 47" autocomplete="off"></label>
-      <label>E-mail kezdőbetűje<input data-f="email" value="${esc(RF.email)}" placeholder="pl. b" autocomplete="off" maxlength="3"></label></div>
+      <label>Ott volt Laura buliján? (igen/nem)<input data-f="party" value="${esc(RF.party)}" placeholder="igen vagy nem" autocomplete="off"></label>
+      <label>Használt telefon<input data-f="dev" value="${esc(RF.dev)}" placeholder="pl. Xiaomi 13" autocomplete="off"></label>
+      <label>Telefonszám vége<input data-f="phone" value="${esc(RF.phone)}" inputmode="numeric" placeholder="pl. 12" autocomplete="off"></label>
+      <label>E-mail kezdőbetűje<input data-f="email" value="${esc(RF.email)}" placeholder="pl. k" autocomplete="off" maxlength="3"></label></div>
       <button class="rz-btn solid" style="margin-top:4px">SZŰRÉS</button>
       <button type="button" class="rz-btn" id="rfClear" style="width:100%;margin-top:8px">SZŰRŐK TÖRLÉSE</button></form>
     <div class="count" id="cnt"></div><div id="people"></div></section>`;
