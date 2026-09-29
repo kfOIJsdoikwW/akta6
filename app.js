@@ -54,17 +54,36 @@ function picLabel(o) {
   if (o.pic === 'party' || o.pic === 'buli') return '<b>🎉</b>buli';
   return '<b>📷</b>';
 }
+// Ha egy kép nem található: rácsban az egész csempe eltűnik, máshol visszaáll a színes helyőrző.
+function imgErr(el) {
+  const tile = el.closest('.grid3 > button'); if (tile) { tile.remove(); return; }
+  const box = el.parentElement; el.remove(); if (box) box.classList.remove('has-img');
+}
 function pic(o, cls) {
   const src = picSrc(o);
-  const img = src ? `<img src="${src}" onerror="this.remove()" alt="" loading="lazy">` : '';
-  return `<div class="pic ${cls || ''}" style="--h:${picHue(o)}">${img}<span>${picLabel(o)}</span></div>`;
+  // Van kép → semleges szürke háttér (mint az igazi Instán), a színes helyőrző csak hiányzó képnél látszik.
+  const img = src ? `<img src="${src}" onerror="imgErr(this)" alt="" decoding="async">` : '';
+  return `<div class="pic ${src ? 'has-img' : ''} ${cls || ''}" style="--h:${picHue(o)}">${img}<span>${picLabel(o)}</span></div>`;
 }
 // Profilkép: img/<kulcs>prof.jpg (pl. rekaprof.jpg, benceprof.jpg) vagy a P[k].pic mezőben megadott fájl; ha nincs meg a fájl: színes monogram.
 function ppSrc(k) { const p = who(k) || {}; return imgPath(p.pic || k + 'prof'); }
 function pp(k) {
   const p = who(k) || {};
   if (p.anon) return '<div class="pp anon" aria-hidden="true"></div>';
-  return `<div class="pp" style="--h:${p.h != null ? p.h : 260}"><img src="${ppSrc(k)}" onerror="this.remove()" alt="">${esc((p.n || '?')[0])}</div>`;
+  return `<div class="pp has-img" style="--h:${p.h != null ? p.h : 260}"><img src="${ppSrc(k)}" onerror="imgErr(this)" alt="">${esc((p.n || '?')[0])}</div>`;
+}
+
+/* ---------- Előtöltés: induláskor az összes Instagram-kép letöltődik a háttérben,
+   így profil megnyitásakor / lapozáskor már a gyorsítótárból, azonnal jelennek meg. ---------- */
+const PRELOADED = [];
+function preloadImages() {
+  const srcs = new Set(PARTY_IMG);
+  const add = o => { const s = picSrc(o); if (s) srcs.add(s); };
+  IG_FEED.forEach(p => p.imgs.forEach(add));
+  IG_STORIES.forEach(s => s.slides.forEach(add));
+  Object.values(IG_PROFILES).forEach(p => { (p.grid || []).forEach(add); (p.highlights || []).forEach(add); });
+  Object.keys(P).forEach(k => { if (P[k].pic) srcs.add(ppSrc(k)); });
+  srcs.forEach(src => { const i = new Image(); i.decoding = 'async'; i.src = src; PRELOADED.push(i); });
 }
 const handle = k => (who(k) || {}).u || k;
 const dispName = k => (who(k) || {}).n || k;
@@ -593,4 +612,5 @@ function showPerson(p) {
 /* ---------- Indítás ---------- */
 const setVh = () => document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
 setVh(); window.addEventListener('resize', setVh); window.addEventListener('orientationchange', setVh);
+preloadImages();
 route();

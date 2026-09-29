@@ -116,6 +116,11 @@ input, select { font: inherit; font-size: 16px; } /* 16px: iOS ne zoomoljon */
 .pic > span { font-size: 12px; font-weight: 600; padding: 8px; text-shadow: 0 1px 4px rgba(0,0,0,.5); line-height: 1.3; }
 .pic > span b { display: block; font-size: 28px; margin-bottom: 4px; }
 .pic > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Betöltés alatt ne a színes helyőrző villanjon fel, hanem semleges szürke (mint az Instán) */
+.pic.has-img { background: #efefef; }
+.pic.has-img > span { visibility: hidden; }
+.story .pic.has-img, .bub.img .pic.has-img { background: #1a1a1a; }
+.pp.has-img { background: #dbdbdb; color: transparent; }
 .pp { position: relative; display: inline-grid; place-items: center; width: 36px; height: 36px; flex: 0 0 36px; border-radius: 50%; overflow: hidden; color: #fff; font-weight: 700; font-size: 14px; background: linear-gradient(135deg, hsl(var(--h) 65% 60%), hsl(calc(var(--h) + 40) 70% 42%)); }
 .pp > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .pp.anon { background: #dbdbdb; }
@@ -180,7 +185,8 @@ input, select { font: inherit; font-size: 16px; } /* 16px: iOS ne zoomoljon */
 .ig-tabs span { flex: 1; text-align: center; padding: 10px 0; font-size: 18px; border-bottom: 1px solid #000; }
 .ig-tabs span + span { border-bottom: none; opacity: .4; }
 .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-.grid3 button { border: none; padding: 0; aspect-ratio: 4 / 5; }
+.grid3 button { display: block; position: relative; overflow: hidden; border: none; padding: 0; aspect-ratio: 4 / 5; background: #efefef; }
+.grid3 .pic { position: absolute; inset: 0; width: 100%; height: 100%; }
 .grid3 .pic > span { font-size: 10px; }
 .grid3 .pic > span b { font-size: 20px; }
 .private { text-align: center; padding: 34px 20px; border-top: 1px solid #efefef; color: #555; }
