@@ -130,8 +130,8 @@ const IG_DMS = {
     { d: '2025.10.04', t: '21:30', x: 'ezt figyeld', them: 1 },
     { d: '2025.10.04', t: '21:30', x: 'valami random csávó küldött rólad kérdezget', them: 1 },
     { d: '2025.10.04', t: '21:31', x: 'azt akarja, hogy írjak rá újra a mátéra, te meg szakíts vele', them: 1 },
-    { d: '2025.10.04', t: '21:40', x: 'mivaaan', me: 1 }
-     { d: '2025.10.04', t: '21:40', x: 'mi a neve??', me: 1 }
+    { d: '2025.10.04', t: '21:40', x: 'mivaaan', me: 1 },
+    { d: '2025.10.04', t: '21:40', x: 'mi a neve??', me: 1 },
     { d: '2025.10.04', t: '21:32', x: 'nemfelejtek vagy valami random ig fiók', them: 1 },
     { d: '2025.10.04', t: '21:40', x: 'köszi hogy szóltál', me: 1 }
   ]},
