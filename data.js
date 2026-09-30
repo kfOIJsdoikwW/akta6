@@ -105,35 +105,35 @@ const IG_PROFILES = {
 // típusok: t (szöveg), img (kép), vanish (eltűnő kép jelzés), sys
 const IG_DMS = {
   anon: { with: 'anon', unread: true, note: 'Ismeretlen fiók kérése – elfogadva', msgs: [
-    { d: '2025.10.02', t: '21:14', x: 'szia rékuci 🙂', them: 1 },
-    { d: '2025.10.02', t: '21:14', x: 'láttam a posztod az új pasiddal', them: 1 },
+    { d: '2025.10.02', t: '21:14', x: 'szia rékuci', them: 1 },
+    { d: '2025.10.02', t: '21:14', x: 'láttam a posztod az új csávóddal', them: 1 },
     { d: '2025.10.02', t: '21:15', x: 'ki vagy?', me: 1 },
     { d: '2025.10.02', t: '21:16', x: 'az nem érdekes. inkább szakíts vele.', them: 1 },
-    { d: '2025.10.02', t: '21:16', x: 'különben elküldöm neki azt a képet, amit tőled kaptam 😉', them: 1 },
-    { d: '2025.10.02', t: '21:17', x: 'meg amúgy is van pár képem rólad a nyárról 🙂', them: 1 },
+    { d: '2025.10.02', t: '21:16', x: 'különben elküldök egy-két képed neki is, és anyudéknak is', them: 1 },
+    { d: '2025.10.02', t: '21:17', x: 'még van pár képem itt-ott', them: 1 },
     { d: '2025.10.02', t: '21:18', vanish: 'Fotó', note: '„nem.felejtek” egy eltűnő fotót küldött.', them: 1 },
     { d: '2025.10.02', t: '21:18', x: 'ez csak ízelítő volt. van több is.', them: 1 },
-    { d: '2025.10.02', t: '21:20', x: 'hagyj békén', me: 1 },
-    { d: '2025.10.04', t: '20:02', img: { pic: 'party', img: 0, fn: PARTY_FILENAME }, note: 'ezt a bulin csináltam rólad', them: 1 },
+    { d: '2025.10.02', t: '21:20', x: 'ezt töröld ki!!', me: 1 },
+    { d: '2025.10.02', t: '21:20', x: 'menj már a picsába', me: 1 },
+    { d: '2025.10.04', t: '20:02', img: { pic: 'party', img: 0, fn: PARTY_FILENAME }, note: 'ez te vagy ugye?', them: 1 },
     { d: '2025.10.04', t: '20:03', x: 'látod? ott voltam. mindig ott vagyok.', them: 1 },
-    { d: '2025.10.04', t: '20:03', img: { pic: 'party', img: 1, fn: 'IMG_20250614_233907.jpg' }, them: 1 },
-    { d: '2025.10.05', t: '18:40', x: 'két napod van. szakíts vele, vagy anyukád is megkapja. 🙂', them: 1 },
+    { d: '2025.10.05', t: '18:40', x: 'két napod van. szakíts vele', them: 1 },
     { d: '2025.10.05', t: '18:44', x: 'ki vagy te?? miért csinálod ezt', me: 1 },
-    { d: '2025.10.05', t: '18:45', x: 'tudod te azt jól, rékuci 😉', them: 1 }
   ]},
   zsofi: { with: 'zsofi', unread: true, note: '', msgs: [
     { d: '2025.09.29', t: '22:10', x: 'szia. tudom hogy te vagy máté új csaja', them: 1 },
     { d: '2025.09.29', t: '22:11', x: 'nem semmi hogy pont őt kellett', them: 1 },
-    { d: '2025.09.29', t: '22:12', x: 'nem tudom mi a bajod velem 🙄', me: 1 },
-    { d: '2025.09.29', t: '22:13', x: 'majd meglátod milyen. sok sikert 🙂', them: 1 },
-    { d: '2025.09.29', t: '22:15', x: 'oké köszönöm a jó tanácsot', me: 1 },
-    { d: '2025.09.30', t: '08:02', x: 'amúgy tényleg csúnya voltam tegnap, bocs. csak rosszul esett az egész', them: 1 },
-    { d: '2025.10.04', t: '21:30', x: 'te réka… muszáj szólnom valamiről', them: 1 },
-    { d: '2025.10.04', t: '21:30', x: 'ma egy „nem.felejtek” nevű fiók küldött nekem rólad egy eltűnő képet 😳', them: 1 },
-    { d: '2025.10.04', t: '21:31', vanish: 'Fotó', note: '„nem.felejtek” egy eltűnő fotót küldött Zsófinak (a rendszer csak azt rögzítette, hogy megnyitotta).', them: 1 },
-    { d: '2025.10.04', t: '21:31', x: 'gyorsan eltűnt és nem mentettem el, de szerintem tudnod kell róla', them: 1 },
-    { d: '2025.10.04', t: '21:32', x: 'nem tudom ki az, de nem semmi hogy ezt csinálja veled. sajnálom 🙁', them: 1 },
-    { d: '2025.10.04', t: '21:40', x: 'jézus… köszönöm hogy szóltál zsófi', me: 1 }
+    { d: '2025.09.29', t: '22:12', x: 'nem tudom mi a bajod velem', me: 1 },
+    { d: '2025.09.29', t: '22:13', x: 'majd meglátod milyen. sok sikert', them: 1 },
+    { d: '2025.09.29', t: '22:15', x: 'köszpusz', me: 1 },
+    { d: '2025.10.04', t: '21:30', x: 'hallod', them: 1 },
+    { d: '2025.10.04', t: '21:30', x: 'ezt figyeld', them: 1 },
+    { d: '2025.10.04', t: '21:30', x: 'valami random csávó küldött rólad kérdezget', them: 1 },
+    { d: '2025.10.04', t: '21:31', x: 'azt akarja, hogy írjak rá újra a mátéra, te meg szakíts vele', them: 1 },
+    { d: '2025.10.04', t: '21:40', x: 'mivaaan', me: 1 }
+     { d: '2025.10.04', t: '21:40', x: 'mi a neve??', me: 1 }
+    { d: '2025.10.04', t: '21:32', x: 'nemfelejtek vagy valami random ig fiók', them: 1 },
+    { d: '2025.10.04', t: '21:40', x: 'köszi hogy szóltál', me: 1 }
   ]},
   laura: { with: 'laura', note: '', msgs: [
     { d: '2025.06.16', t: '14:20', x: 'kösziii a szülinapot még egyszer 🥺 életem legjobb bulija volt', me: 1 },
@@ -171,11 +171,9 @@ const SC_FRIENDS = [
     { d: 'RÉGEBBI', sys: '☆ Ez a beszélgetés Réka mentései miatt maradt meg. A többi üzenet 24 óra után eltűnt.' },
     { d: '2025.05.10', who: 'bence', x: 'jó éjt rékuci 🤍' },
     { d: '2025.05.10', who: 'me', x: 'jó éjt 🤍', saved: 1 },
-    { d: '2025.06.02', who: 'bence', x: 'csak én hívhatlak rékucinak, ne feledd 😌', saved: 1 },
-    { d: '2025.06.02', who: 'me', x: 'haha oké oké' },
     { d: '2025.07.20', who: 'bence', x: 'ne szakíts velem. megbánod.' },
     { d: '2025.07.20', who: 'me', x: 'bence ne csináld ezt', saved: 1 },
-    { d: '2025.07.20', who: 'bence', x: 'még beszélünk. nem felejtek.', saved: 1 },
+    { d: '2025.07.20', who: 'bence', x: 'még beszélünk', saved: 1 },
     { d: '2025.07.21', snap: 'me' }
   ]},
   { k: 'laura', streak: 88, snapcode: 'LK', chats: [
